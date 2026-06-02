@@ -9,10 +9,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up JDK
+      - name: Setup JDK
         uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -21,9 +21,10 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Fix Gradle permissions
+      - name: Grant execute permission
         run: chmod +x gradlew
 
+      # ✅ SAFE BUILD (NO signing crash)
       - name: Build Debug APK
         run: ./gradlew assembleDebug --no-daemon
 
