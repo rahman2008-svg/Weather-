@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.aistudio.weather.pjkwr"
+    namespace = "com.example.weather"
     compileSdk = 36
 
     defaultConfig {
@@ -19,12 +19,16 @@ android {
     }
 
     buildTypes {
-        release {
+        debug {
             isMinifyEnabled = false
         }
 
-        debug {
+        release {
             isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 
@@ -41,32 +45,25 @@ android {
         compose = true
         buildConfig = true
     }
-
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
 }
 
 dependencies {
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.activity.compose)
+    implementation(platform("androidx.compose:compose-bom:2024.12.01"))
 
-    implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.ui.graphics)
-    implementation(libs.androidx.compose.ui.tooling.preview)
-    implementation(libs.androidx.compose.material3)
+    implementation("androidx.core:core-ktx:1.13.1")
+    implementation("androidx.activity:activity-compose:1.9.2")
 
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.ui:ui-tooling-preview")
 
-    implementation(libs.okhttp)
-    implementation(libs.retrofit)
-    implementation(libs.converter.moshi)
-    implementation(libs.moshi.kotlin)
+    debugImplementation("androidx.compose.ui:ui-tooling")
 
-    implementation(libs.kotlinx.coroutines.android)
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.6")
 
-    testImplementation(libs.junit)
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-moshi:2.11.0")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+
+    ksp("com.squareup.moshi:moshi-kotlin-codegen:1.15.1")
 }
